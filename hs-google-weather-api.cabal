@@ -1,0 +1,16 @@
+Name:              google-weather-api
+Version:           0.0
+Synopsis:          Google weather api implemented in haskell
+
+License:           MIT
+License:           LICENSE
+Author:            Peter
+Build-type:        Simple
+
+Cabal-version:     >= 1.2
+Library
+  Exposed-modules: WeatherApi.Google
+  Build-depends:   base, network
+                  ,hxt == 9.2.*
+                  ,HTTP == 4000.2.*
+
