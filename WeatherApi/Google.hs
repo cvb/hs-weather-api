@@ -1,7 +1,7 @@
 {-# LANGUAGE Arrows, NoMonomorphismRestriction #-}
-module WeatherApi.Google(Config(...)
+module WeatherApi.Google(Config(..)
                         , WeatherApiHandler
-                        , Weather(...)
+                        , Weather(..)
                         , initApi
                         , weather
                         ) where
