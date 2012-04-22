@@ -1,45 +1,33 @@
 {-# LANGUAGE Arrows, NoMonomorphismRestriction #-}
-module WeatherApi.Google(Config(..)
-                        , WeatherApiHandler
-                        , Weather(..)
-                        , initApi
-                        , weather
-                        ) where
+module WeatherApi.Google (initApi) where
 
 import Text.XML.HXT.Core
 import Network.HTTP
 import Network.URI
+import WeatherApi
 
-apiUrl = "http://www.google.com/ig/api?"
+apiUrl  = "http://www.google.com/ig/api?"
 
-data Config = Config { language :: String
-                     , encoding :: String
-                     } deriving (Show)
+type Lang = String
+type Enc  = String
 
-defaultConfig = Config { language = "en", encoding = "utf-8" }
-
-data WeatherApiHandler = WeatherApiHandler (String -> String)
-
-data Weather = Weather { tempF, tempC  :: Double
-                       , humidity      :: String
-                       , windCondition :: String
-                       , condition     :: String
-                       } deriving (Eq, Show)
-
-initApi :: Config -> WeatherApiHandler
-initApi config =
-    let params = [("hl", language config), ("oe", encoding config)]
+initApi :: Lang -> Enc -> Config
+initApi   lang   enc =
+    let params = [("hl", lang), ("oe", enc)]
         urn    = \c -> urlEncodeVars $ params ++ [("weather", c)]
-    in WeatherApiHandler urn
+    in Config { apiHost  = "www.google.com"
+              , apiPort  = 80
+              , queryFun = makeQueryFun urn
+              }
 
-retrieve urn =
+retrieve s urn =
     case parseURI $ apiUrl ++ urn of
       Nothing  -> return $ Left "Invalid URL"
-      Just uri -> get uri
+      Just uri -> get s uri
 
-get uri =
+get s uri =
     do
-      eresp <- simpleHTTP (Request uri GET [] "")
+      eresp <- sendHTTP s (Request uri GET [] "")
       case eresp of
         Left err  -> return $ Left $ show err
         Right res -> return $ Right $ rspBody res
@@ -47,7 +35,7 @@ get uri =
 atTag tag = deep (isElem >>> hasName tag)
 dataAtTag tag = atTag tag >>> getAttrValue "data"
 
-getWeather = atTag "current_conditions" >>>
+parseWeather = atTag "current_conditions" >>>
   proc x -> do
     tempF'         <- dataAtTag "temp_f"         -< x
     tempC'         <- dataAtTag "temp_c"         -< x
@@ -66,14 +54,13 @@ parseXML doc = readString [ withValidate no
                           , withRemoveWS yes
                           ] doc
 
-weather (WeatherApiHandler h) city =
-    do
-      resp <- retrieve $ h city
+makeQueryFun q = \stream city -> do
+      resp <- retrieve stream $ q city
       xml  <- return $ (resp >>= return . parseXML)
       case xml of
         Left a  -> return $ Left a
         Right a -> do
-                 r <- runX(a >>> getWeather)
+                 r <- runX(a >>> parseWeather)
                  case r of
                    [] -> return $ Left "can't retrieve weather"
                    (x:xs) -> return $ Right x
