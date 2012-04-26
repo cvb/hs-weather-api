@@ -5,7 +5,7 @@ import Text.XML.HXT.Core
 import Network.HTTP
 import Network.URI
 import WeatherApi
-
+import Control.Monad (liftM)
 apiUrl  = "http://www.google.com/ig/api?"
 
 type Lang = String
@@ -15,7 +15,7 @@ type Enc  = String
 initApi :: Lang -> Enc -> Config
 initApi   lang   enc =
     let params = [("hl", lang), ("oe", enc)]
-        urn    = \c -> urlEncodeVars $ params ++ [("weather", c)]
+        urn c  = urlEncodeVars $ params ++ [("weather", c)]
     in Config { apiHost  = "www.google.com"
               , apiPort  = 80
               , queryFun = makeQueryFun urn
@@ -51,18 +51,18 @@ parseWeather = atTag "current_conditions" >>>
       , condition     = condition'
       }
 
-parseXML doc = readString [ withValidate no
-                          , withRemoveWS yes
-                          ] doc
+parseXML = readString [ withValidate no
+                      , withRemoveWS yes
+                      ]
 
 -- | This return function witch will actualy retrieve and parse weather from stream
-makeQueryFun q = \stream city -> do
+makeQueryFun q stream city =
+    do
       resp <- retrieve stream $ q city
-      xml  <- return $ (resp >>= return . parseXML)
-      case xml of
+      case liftM parseXML resp of
         Left a  -> return $ Left a
         Right a -> do
-                 r <- runX(a >>> parseWeather)
-                 case r of
-                   [] -> return $ Left "can't retrieve weather"
-                   (x:xs) -> return $ Right x
+          r <- runX(a >>> parseWeather)
+          case r of
+            []     -> return $ Left "can't retrieve weather"
+            (x:xs) -> return $ Right x

@@ -12,8 +12,8 @@ import Network.URI
 
 data Config = Config { apiHost  :: String
                      , apiPort  :: Int
-                     , queryFun :: (HandleStream String) ->
-                                  String                ->
+                     , queryFun :: HandleStream String ->
+                                  String              ->
                                       IO (Either String Weather)
                      }
 
@@ -40,7 +40,7 @@ closeHandler (WeatherApiHandler stream _) = stream >>= closeQuick
 
 -- | Retrieve weather using existing handler
 getWeather (WeatherApiHandler stream c) city =
-    stream >>= \s -> (queryFun c) s city
+    stream >>= \s -> queryFun c s city
 
 -- | Retrieve weather using just config
 -- It's usefull when you don't need one connection for few requests
