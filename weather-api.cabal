@@ -11,11 +11,13 @@ License-file:      LICENSE
 Author:            Peter
 Maintainer:        peter@standalone.su
 Build-type:        Simple
+Category:          API
 
-Cabal-version:     >= 1.2
+Cabal-version:     >= 1.6
 Library
   Exposed-modules: WeatherApi, WeatherApi.Google
-  Build-depends:   base, network
+  Build-depends:   base          == 4.*
+                  ,network       == 2.3.*
                   ,hxt           == 9.2.*
                   ,HTTP          == 4000.2.*
                   ,resource-pool == 0.2.1.*

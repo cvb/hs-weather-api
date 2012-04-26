@@ -1,3 +1,32 @@
+-- | Usage:
+--
+-- required imports
+--
+-- > import WeatherApi
+-- > import WeatherApi.Google
+--
+-- With handler in case server will alow you to make
+-- few requests with one connection
+--
+-- >>> let h = mkWeatherHandler $ initApi "en" "utf-8"
+-- >>> getWeather h "moscow"
+-- Right (Weather { tempF = 75.0
+--                , tempC = 24.0
+--                , humidity = "Humidity: 25%"
+--                , windCondition = "Wind: S at 16 mph"
+--                , condition = "Clear"
+--                })
+--
+-- Simple case
+--
+-- >>> getWeather' (initApi "en" "utf-8") "moscow"
+-- Right (Weather { tempF = 75.0
+--                , tempC = 24.0
+--                , humidity = "Humidity: 25%"
+--                , windCondition = "Wind: S at 16 mph"
+--                , condition = "Clear"
+--                })
+
 module WeatherApi (WeatherApiHandler(..)
                   ,Config(..)
                   ,Weather(..)
