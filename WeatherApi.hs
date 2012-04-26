@@ -7,7 +7,6 @@ module WeatherApi (WeatherApiHandler(..)
                   ,isHandlerAlive
                   ,closeHandler) where
 
-import Data.Pool
 import Network.HTTP
 import Network.URI
 

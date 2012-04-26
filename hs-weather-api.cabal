@@ -1,6 +1,6 @@
-Name:              google-weather-api
+Name:              weather-api
 Version:           0.0
-Synopsis:          Google weather api implemented in haskell
+Synopsis:          Weather api implemented in haskell
 
 License:           MIT
 License:           LICENSE
