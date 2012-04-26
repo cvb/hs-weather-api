@@ -38,9 +38,12 @@ isHandlerAlive (WeatherApiHandler stream (Config h p _)) =
 
 closeHandler (WeatherApiHandler stream _) = stream >>= closeQuick
 
+-- | Retrieve weather using existing handler
 getWeather (WeatherApiHandler stream c) city =
     stream >>= \s -> (queryFun c) s city
 
+-- | Retrieve weather using just config
+-- It's usefull when you don't need one connection for few requests
 getWeather' (Config apiHost apiPort queryFun) city =
     openStream apiHost apiPort >>= \s -> queryFun s city
 

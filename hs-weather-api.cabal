@@ -1,7 +1,11 @@
 Name:              weather-api
 Version:           0.0
 Synopsis:          Weather api implemented in haskell
+Description:
+        This library implement generic api for retrieving weather
+        by http, and has google weather api as example.
 
+Homepage: https://github.com/cvb/hs-weather-api.git
 License:           MIT
 License-file:      LICENSE
 Author:            Peter

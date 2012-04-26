@@ -11,6 +11,7 @@ apiUrl  = "http://www.google.com/ig/api?"
 type Lang = String
 type Enc  = String
 
+-- | Make config for use with WeatherApi functions
 initApi :: Lang -> Enc -> Config
 initApi   lang   enc =
     let params = [("hl", lang), ("oe", enc)]
@@ -54,6 +55,7 @@ parseXML doc = readString [ withValidate no
                           , withRemoveWS yes
                           ] doc
 
+-- | This return function witch will actualy retrieve and parse weather from stream
 makeQueryFun q = \stream city -> do
       resp <- retrieve stream $ q city
       xml  <- return $ (resp >>= return . parseXML)
