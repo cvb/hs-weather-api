@@ -3,7 +3,7 @@ Version:           0.0
 Synopsis:          Weather api implemented in haskell
 
 License:           MIT
-License:           LICENSE
+License-file:      LICENSE
 Author:            Peter
 Build-type:        Simple
 
