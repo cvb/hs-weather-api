@@ -20,7 +20,6 @@ Library
                   ,network       == 2.3.*
                   ,hxt           == 9.2.*
                   ,HTTP          == 4000.2.*
-                  ,resource-pool == 0.2.1.*
 
 source-repository head
   type:     git
