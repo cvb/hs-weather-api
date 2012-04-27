@@ -1,5 +1,5 @@
 Name:              weather-api
-Version:           0.0
+Version:           0.0.1
 Synopsis:          Weather api implemented in haskell
 Description:
         This library implement generic api for retrieving weather
