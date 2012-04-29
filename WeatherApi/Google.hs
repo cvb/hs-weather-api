@@ -6,6 +6,8 @@ import Network.HTTP
 import Network.URI
 import WeatherApi
 import Control.Monad (liftM)
+import Codec.Binary.UTF8.String
+
 apiUrl  = "http://www.google.com/ig/api?"
 
 type Lang = String
@@ -15,7 +17,7 @@ type Enc  = String
 initApi :: Lang -> Enc -> Config
 initApi   lang   enc =
     let params = [("hl", lang), ("oe", enc)]
-        urn c  = urlEncodeVars $ params ++ [("weather", c)]
+        urn c  = urlEncodeVars $ params ++ [("weather", encodeString c)]
     in Config { apiHost  = "www.google.com"
               , apiPort  = 80
               , queryFun = makeQueryFun urn
