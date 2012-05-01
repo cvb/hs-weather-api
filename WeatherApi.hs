@@ -30,6 +30,8 @@
 module WeatherApi (WeatherApiHandler(..)
                   ,Config(..)
                   ,Weather(..)
+                  ,ApiError(..)
+                  ,ApiResponse(..)
                   ,getWeather
                   ,getWeather'
                   ,mkWeatherHandler
@@ -43,7 +45,7 @@ data Config = Config { apiHost  :: String
                      , apiPort  :: Int
                      , queryFun :: HandleStream String ->
                                   String              ->
-                                      IO (Either String Weather)
+                                      IO (ApiResponse)
                      }
 
 data WeatherApiHandler = WeatherApiHandler
@@ -56,6 +58,9 @@ data Weather = Weather { tempF, tempC  :: Double
                        , windCondition :: String
                        , condition     :: String
                        } deriving (Eq, Show)
+
+data ApiError    = NotFoundError String | NetworkError String
+type ApiResponse = Either ApiError Weather
 
 mkWeatherHandler c@(Config apiHost apiPort queryFun) =
   WeatherApiHandler { stream = openStream apiHost apiPort
