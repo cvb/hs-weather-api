@@ -1,5 +1,5 @@
 Name:              weather-api
-Version:           0.2.0
+Version:           0.3.0
 Synopsis:          Weather api implemented in haskell
 Description:
         This library implement generic api for retrieving weather
@@ -15,12 +15,17 @@ Category:          API
 
 Cabal-version:     >= 1.6
 Library
-  Exposed-modules: WeatherApi, WeatherApi.Google
+  Exposed-modules: WeatherApi, WeatherApi.WWOnline
+  Other-modules:
+    WeatherApi.Util
   Build-depends:   base          == 4.*
                   ,network       == 2.3.*
-                  ,hxt           == 9.2.*
                   ,HTTP          == 4000.2.*
                   ,utf8-string   == 0.3.7
+                  ,aeson         == 0.6.*
+                  ,bytestring    == 0.9.*
+                  ,attoparsec    == 0.10.*
+                  ,vector        == 0.10.*
 
 source-repository head
   type:     git

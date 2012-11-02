@@ -59,7 +59,11 @@ data Weather = Weather { tempF, tempC  :: Double
                        , condition     :: String
                        } deriving (Eq, Show)
 
-data ApiError    = NotFoundError String | NetworkError String deriving Show
+data ApiError    = NotFoundError String
+                 | NetworkError String
+                 | ParseError String
+                 deriving Show
+
 type ApiResponse = Either ApiError Weather
 
 mkWeatherHandler c@(Config apiHost apiPort queryFun) =
