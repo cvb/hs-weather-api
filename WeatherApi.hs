@@ -38,6 +38,8 @@ module WeatherApi (WeatherApiHandler(..)
                   ,isHandlerAlive
                   ,closeHandler) where
 
+import System.IO.Error
+
 import Network.HTTP
 import Network.URI
 
@@ -82,7 +84,8 @@ getWeather (WeatherApiHandler stream c) city =
 
 -- | Retrieve weather using just config
 -- It's usefull when you don't need one connection for few requests
-getWeather' (Config apiHost apiPort queryFun) city =
-    openStream apiHost apiPort >>= \s -> queryFun s city
+getWeather' (Config apiHost apiPort queryFun) city = do
+    catchIOError (openStream apiHost apiPort >>= \s -> queryFun s city)
+      (\e -> return $ Left $ NetworkError $ show e)
 
 
