@@ -19,7 +19,7 @@ Library
   Other-modules:
     WeatherApi.Util
   Build-depends:   base          == 4.*
-                  ,network       == 2.3.*
+                  ,network       == 2.4.*
                   ,HTTP          == 4000.2.*
                   ,utf8-string   == 0.3.7
                   ,aeson         == 0.6.*
