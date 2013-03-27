@@ -16,7 +16,7 @@ import qualified Data.Vector as V
 
 import WeatherApi.Util
 
-apiUrl  = "http://free.worldweatheronline.com/feed/weather.ashx?"
+apiUrl = "http://api.worldweatheronline.com/free/v1/weather.ashx?"
 
 type ApiKey = String
 
@@ -37,7 +37,7 @@ initApi :: ApiKey -> Config
 initApi key =
     let params = [("format", "json"), ("key", key)]
         urn c  = urlEncodeVars $ params ++ [("q", encodeString c)]
-    in Config { apiHost  = "free.worldweatheronline.com"
+    in Config { apiHost  = "api.worldweatheronline.com"
               , apiPort  = 80
               , queryFun = makeQueryFun urn
               }
