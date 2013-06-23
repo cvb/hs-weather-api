@@ -64,7 +64,9 @@ makeQueryFun q stream city =
       case resp of
         Left err -> return $ Left err
         Right c  -> do
-          let v = fromJust $ maybeResult $ parse json $ pack c
-          return $ case fromJSON v :: Result Weather of
-            Error e   -> Left $ ParseError $ "Can't parse data: " ++ e
-            Success v -> Right v
+          case maybeResult $ parse json $ pack c of
+            Nothing -> return $ Left $ ParseError "Bad response"
+            Just v  ->
+              return $ case fromJSON v :: Result Weather of
+                Error e   -> Left $ ParseError $ "Can't parse data: " ++ e
+                Success v -> Right v
