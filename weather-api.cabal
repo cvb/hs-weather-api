@@ -22,7 +22,7 @@ Library
                   ,network       == 2.4.*
                   ,HTTP          == 4000.2.*
                   ,utf8-string   == 0.3.7
-                  ,aeson         == 0.6.*
+                  ,aeson         >= 0.6 && < 0.8
                   ,bytestring    == 0.10.*
                   ,attoparsec    >= 0.10 && < 0.12
                   ,vector        >= 0.9
