@@ -1,5 +1,5 @@
 Name:              weather-api
-Version:           0.4.3
+Version:           0.4.3.1
 Synopsis:          Weather api implemented in haskell
 Description:
         This library implement generic api for retrieving weather
@@ -19,12 +19,12 @@ Library
   Other-modules:
     WeatherApi.Util
   Build-depends:   base          == 4.*
-                  ,network       == 2.4.*
+                  ,network       >= 2.4 && < 2.6
                   ,HTTP          == 4000.2.*
                   ,utf8-string   == 0.3.*
                   ,aeson         >= 0.6 && < 0.8
                   ,bytestring    == 0.10.*
-                  ,attoparsec    >= 0.10 && < 0.12
+                  ,attoparsec    >= 0.10 && < 0.13
                   ,vector        >= 0.9
 
 source-repository head
