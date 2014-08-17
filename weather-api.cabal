@@ -21,7 +21,7 @@ Library
   Build-depends:   base          == 4.*
                   ,network       == 2.4.*
                   ,HTTP          == 4000.2.*
-                  ,utf8-string   == 0.3.7
+                  ,utf8-string   == 0.3.*
                   ,aeson         >= 0.6 && < 0.8
                   ,bytestring    == 0.10.*
                   ,attoparsec    >= 0.10 && < 0.12
