@@ -8,7 +8,7 @@ import Codec.Binary.UTF8.String (encodeString)
 import Data.ByteString.Char8 (pack, unpack)
 import Data.Aeson
 import Data.Aeson.TH
-import Data.Attoparsec hiding (Result(..))
+import Data.Attoparsec.ByteString hiding (Result(..))
 import Data.Maybe
 
 import Control.Applicative
