@@ -18,11 +18,11 @@ library:
     - WeatherApi.Util
 dependencies:
   - base < 5
-  - HTTP
-  - aeson
-  - attoparsec
-  - bytestring
-  - network
-  - network-uri
-  - utf8-string
-  - vector
+  - HTTP        == 4000.3.*
+  - aeson       == 1.0.*
+  - attoparsec  == 0.13.*
+  - bytestring  == 0.10.*
+  - network     == 2.6.*
+  - network-uri == 2.6.*
+  - utf8-string == 1.0.*
+  - vector      == 0.11.*
