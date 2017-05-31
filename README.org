@@ -9,13 +9,13 @@
 
 ** With handler in case server will alow you to make few requests with one connection
 #+BEGIN_SRC haskell
-   > let h = mkWeatherHandler $ initApi "en" "utf-8"
+   > let h = mkWeatherHandler $ initApi "key"
    > getWeather h "moscow"
    Right (Weather {tempF = 75.0, tempC = 24.0, humidity = "Humidity: 25%", windCondition = "Wind: S at 16 mph", condition = "Clear"})
 #+END_SRC
 
 ** Simple case
 #+BEGIN_SRC haskell
-   > getWeather' (initApi "en" "utf-8") "moscow"
+   > getWeather' (initApi "key") "moscow"
    Right (Weather {tempF = 75.0, tempC = 24.0, humidity = "Humidity: 25%", windCondition = "Wind: S at 16 mph", condition = "Clear"})
 #+END_SRC
